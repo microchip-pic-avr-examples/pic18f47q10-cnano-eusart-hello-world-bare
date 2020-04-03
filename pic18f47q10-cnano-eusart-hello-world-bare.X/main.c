@@ -23,6 +23,8 @@
 
 /* Disable Watch Dog Timer */
 #pragma config WDTE = OFF   
+/* Low voltage programming enabled , RE3 pin is MCLR */
+#pragma config LVP = ON
 
 #include <xc.h>
 #include <stdint.h>
