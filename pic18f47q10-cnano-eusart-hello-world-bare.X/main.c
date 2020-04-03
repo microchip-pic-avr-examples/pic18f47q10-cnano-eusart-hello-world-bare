@@ -28,9 +28,6 @@
 #include <stdint.h>
 #include <string.h>
 
-#define PPS_CONFIG_RD0_EUSART2_OUT 0x0B
-#define BAUD_RATE_SYNC_0_BRG16_1_FOSC_1MHZ 0x19
-
 static void CLK_init(void);
 static void EUSART2_init(void);
 static void PPS_init(void);
@@ -39,38 +36,45 @@ static void EUSART2_write(uint8_t txData);
 
 static void CLK_init(void)
 {   
-    /* Set HFINTOSC as new oscillator source. */
-    OSCCON1 = _OSCCON1_NOSC1_MASK | _OSCCON1_NOSC2_MASK;
-
-    /* Set HFFRQ to 1 MHz. */
-    OSCFRQ = ~_OSCFREQ_HFFRQ_MASK;
+    /* Set HFINTOSC as new oscillator source */
+    OSCCON1bits.NOSC = 0b011;
+    
+    /* Set HFFRQ to 1 MHz */
+    OSCFRQbits.HFFRQ = 0;
 }
 
 static void EUSART2_init(void)
 {
-    BAUD2CON = _BAUD2CON_BRG16_MASK;
+    /* Transmit Enable */
+    TX2STAbits.TXEN = 1;
+    /* High Baud Rate Select */
+    TX2STAbits.BRGH = 1;
     
-    RC2STA = _RC2STA_SPEN_MASK;
+    /* 16-bit Baud Rate Generator is used */
+    BAUD2CONbits.BRG16 = 1;
     
-    TX2STA = _TX2STA_TXEN_MASK | _TX2STA_BRGH_MASK;
+    /* Baud rate 9600 */
+    SP2BRGL = 0x19;
     
-    SP2BRGL = BAUD_RATE_SYNC_0_BRG16_1_FOSC_1MHZ;
+    /* Serial Port Enable */
+    RC2STAbits.SPEN = 1;
 }
 
 static void PPS_init(void) 
 {
-    RD0PPS = PPS_CONFIG_RD0_EUSART2_OUT; 
+    /* RD0 is TX2 */
+    RD0PPS = 0x0B;
 }
 
 static void PORT_init(void)
 {
     /* Configure RD0 as output. */
-    TRISD &= ~_TRISD_TRISD0_MASK;
+    TRISDbits.TRISD0 = 0;
 }
 
 static void EUSART2_write(uint8_t txData)
 {
-    while(!(PIR3 & _PIR3_TX2IF_MASK))
+    while(0 == PIR3bits.TX2IF)
     {
         ;
     }
