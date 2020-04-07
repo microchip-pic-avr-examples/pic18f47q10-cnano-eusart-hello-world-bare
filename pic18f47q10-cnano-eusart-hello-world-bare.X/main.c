@@ -39,7 +39,7 @@ static void EUSART2_write(uint8_t txData);
 static void CLK_init(void)
 {   
     /* Set HFINTOSC as new oscillator source */
-    OSCCON1bits.NOSC = 0b011;
+    OSCCON1bits.NOSC = 0b110;
     
     /* Set HFFRQ to 1 MHz */
     OSCFRQbits.HFFRQ = 0;
@@ -56,7 +56,7 @@ static void EUSART2_init(void)
     BAUD2CONbits.BRG16 = 1;
     
     /* Baud rate 9600 */
-    SP2BRGL = 0x19;
+    SP2BRGL = 25;
     
     /* Serial Port Enable */
     RC2STAbits.SPEN = 1;
