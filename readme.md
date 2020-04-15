@@ -1,4 +1,4 @@
-<a href="https://www.microchip.com" rel="nofollow"><img src="images/MicrochipLogo.png" alt="MCHP" style="max-width:40%;"/></a>
+<a href="https://www.microchip.com" rel="nofollow"><img src="./images/MicrochipLogo.png" alt="Microchip Logo" width="300" /></a>
 
 # PIC18F47Q10 EUSART Sending "Hello World" message
 
@@ -35,7 +35,7 @@ The following configurations must be made for this project:
 
 Run the code, start MPLAB® X Data Visualizer on the correct COM port and select the terminal input source than messages will start appearing.
 
-<img src="images/demo.png" alt="Demo in MPLABX Data Visualizer"/>
+![Demo in MPLABX Data Visualizer](./images/demo.png)
 
 ## Summary
 
