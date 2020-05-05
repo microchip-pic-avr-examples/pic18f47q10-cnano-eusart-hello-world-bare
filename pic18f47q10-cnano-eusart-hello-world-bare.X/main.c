@@ -57,6 +57,7 @@ static void EUSART2_init(void)
     
     /* Baud rate 9600 */
     SP2BRGL = 25;
+    SP2BRGH = 0;
     
     /* Serial Port Enable */
     RC2STAbits.SPEN = 1;
